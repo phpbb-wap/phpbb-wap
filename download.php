@@ -257,58 +257,39 @@ if(isset($_GET['true']))
 			trigger_error('无法更新下载次数', E_USER_WARNING);
 		}
 
+		$db->sql_close();
+
 		$url 			= $board_config['upload_dir'] . '/' . create_date('Ym', $attachment['filetime'], 0) . '/' .$attachment['physical_filename'];
-		//$mimetype 		= $attachment['mimetype'];
 		$real_filename 	= htmlspecialchars($attachment['real_filename']);
-		//$filesize 		= $attachment['filesize'];
 		$user_agent 	= $_SERVER["HTTP_USER_AGENT"];
 		$filesize 		= intval ( sprintf ('%u', filesize ( $url ) ) );
-		//echo $filesize;exit;
 
-		//ob_start();
-		//ob_end_flush();
-
-		//header('Content-Description: File Transfer');  
-		//header('Pragma: public');
-		header('Content-Type: application/octet-stream');
-		//header('Accept-Ranges: bytes');
-		header('Content-Length: ' . $filesize);
-		//header('Content-Transfer-Encoding: binary');
-		//header('Expires: 0');
-		//header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		//header('Pragma: public');
-
-		if ( preg_match('/MSIE/', $user_agent) )
+		if ($board_config['download_mode'])
 		{
-			$ie_real_filename = rawurlencode($real_filename);  
-			header('Content-Disposition: attachment;filename="' . $ie_real_filename . '"');
-		}
-		else if ( preg_match('/Firefox/', $user_agent) )
-		{
-			header("Content-Disposition: attachment; filename*=\"utf8''" . $real_filename . '"');
+			header('Content-Encoding: none');
+			header('Content-Type: application/octet-stream');
+			header('Content-Length: ' . $filesize);
+			header('Pragma: no-cache');
+	        header('Expires: 0');
+	        header('Content-Disposition: attachment ; filename='.$real_filename.'.zip');
+
+			readfile($url);
 		}
 		else
 		{
-			header('Content-Disposition: attachment;filename="' . $real_filename . '"');
+			$server_protocol 	= ($board_config['cookie_secure']) ? 'https://' : 'http://';
+			$server_name 		= preg_replace('/^\/?(.*?)\/?$/', '\1', trim($board_config['server_name']));
+			$server_port 		= ($board_config['server_port'] <> 80) ? ':' . trim($board_config['server_port']) : '';
+			$script_name 		= preg_replace('/^\/?(.*?)\/?$/', '/\1', trim($board_config['script_path']));
+			$script_name_array 	= str_split($script_name, 1);
+
+			if ($script_name_array[strlen($script_name) - 1] != '/')
+			{
+				$script_name .= '/';
+			}
+
+			header('Location: ' . $server_protocol . $server_name . $server_port . $script_name . $url);
 		}
-
-		readfile($url);
-		//function readfileEx($filename) {
-		//  $chunksize = 1024 * 1024; // 缓冲区块大小
-		//  $handle = fopen($filename, 'rb'); 
-		//  $buffer = ''; 
-		//  while (!feof($handle)) { 
-		//    $buffer = fread($handle, $chunksize); 
-		//    echo ($buffer);
-		//    flush(); 
-		//  } 
-		//  fclose($handle); 
-		//}
-
-		//readfileEx($url);
-
-
-		$db->sql_close();
 
 		exit;
 	}

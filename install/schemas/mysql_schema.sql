@@ -716,3 +716,9 @@ CREATE TABLE phpbb_styles (
   PRIMARY KEY (style_id),
   UNIQUE KEY style_path (style_path)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE phpbb_download (
+  download_user mediumint(8) NOT NULL,
+  download_attach mediumint(8) NOT NULL,
+  download_time int(11) NOT NULL default '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -364,7 +364,7 @@ if ($mode == 'manage')
 		'body' => 'admin/attach_manage_body.tpl')
 	);
 
-	$yes_no_switches = array('disable_mod', 'allow_ftp_upload', 'attachment_topic_review', 'display_order', 'show_apcp', 'ftp_pasv_mode');
+	$yes_no_switches = array('disable_mod', 'allow_ftp_upload', 'attachment_topic_review', 'display_order', 'download_mode', 'show_apcp', 'ftp_pasv_mode');
 
 	for ($i = 0; $i < count($yes_no_switches); $i++)
 	{
@@ -411,6 +411,8 @@ if ($mode == 'manage')
 		'TOPIC_REVIEW_NO'		=> $attachment_topic_review_no,
 		'DISPLAY_ORDER_ASC'		=> $display_order_yes,
 		'DISPLAY_ORDER_DESC'	=> $display_order_no,
+		'DOWNLOAD_MODE_YES'		=> $download_mode_yes,
+		'DOWNLOAD_MODE_NO'		=> $download_mode_no,
 		'SHOW_APCP_YES'			=> $show_apcp_yes,
 		'SHOW_APCP_NO'			=> $show_apcp_no)
 	);

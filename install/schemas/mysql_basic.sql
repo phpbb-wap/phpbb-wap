@@ -124,6 +124,7 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('use_tpl_css', '1')
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('allow_guests_gb', '0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('gb_posts', '10');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('gb_quick', '1');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('download_mode', '0');
 
 #-- 论坛分类
 INSERT INTO phpbb_categories (cat_id, cat_title, cat_order) VALUES (1, '测试分类', 10);

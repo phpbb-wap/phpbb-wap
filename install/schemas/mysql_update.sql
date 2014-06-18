@@ -55,14 +55,21 @@ CREATE TABLE phpbb_styles (
   UNIQUE KEY style_path (style_path)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+CREATE TABLE phpbb_download (
+  download_user mediumint(8) NOT NULL,
+  download_attach mediumint(8) NOT NULL,
+  download_time int(11) NOT NULL default '0'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 INSERT INTO phpbb_styles (style_id, style_name, style_path, style_version, style_copyright) VALUES (1, 'Gray', 'Gray', '6.0.271', 'phpBB-WAP');
 
 ALTER TABLE phpbb_users ADD user_can_gb TINYINT( 1 ) NOT NULL DEFAULT '1';
-ALTER TABLE phpbb_users CHANGE user_java_otv user_java_otv TINYINT( 4 ) NOT NULL DEFAULT '1', CHANGE user_bb_panel user_bb_panel TINYINT( 4 ) NOT NULL DEFAULT '1';
-INSERT INTO phpbb_config (config_name, config_value) VALUES 
-INSERT INTO phpbb_config (config_name, config_value) ('allow_guests_gb', '0');
-INSERT INTO phpbb_config (config_name, config_value) ('gb_posts', '10');
-INSERT INTO phpbb_config (config_name, config_value) ('gb_quick', '1');
+ALTER TABLE phpbb_users CHANGE user_java_otv user_java_otv TINYINT( 4 ) NOT NULL DEFAULT '1';
+ALTER TABLE phpbb_users CHANGE user_bb_panel user_bb_panel TINYINT( 4 ) NOT NULL DEFAULT '1';
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('allow_guests_gb', '0');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('gb_posts', '10');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('gb_quick', '1');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('download_mode', '0');
 
 UPDATE phpbb_config SET config_value = '271' WHERE config_name = 'version';
 UPDATE phpbb_users SET user_style = 1;
